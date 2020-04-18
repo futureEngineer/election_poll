@@ -1,0 +1,40 @@
+﻿<div class="wrapper">
+  <ngx-toasta [position]="'top-right'"></ngx-toasta>
+  <section class="height-100vh d-flex align-items-center page-section-ptb login" style="background: url(assets/images/login-bg.jpg);">
+    <div class="container">
+      <div class="row justify-content-center no-gutters vertical-align">
+        <div class="col-lg-4 col-md-6 bg-white">
+          <div class="login-fancy pb-40 clearfix">
+            <h3 class="mb-30">Sign In To Admin</h3>
+            <form  [formGroup]="form" >
+              <div class="section-field mb-20">
+                <label class="mb-10" for="name">Mobile Number </label><span class="text-danger font-italic"> *</span>
+                <input id="name" class="web form-control" type="text" placeholder="Mobile Number" name="web" formControlName="username" (keypress)="validateMobile($event)" required minlength="10"  maxlength="10">
+                <span class="text-danger font-italic pt-2" *ngIf="form.controls['username'].hasError('minlength')">Mobile number should be 10 characters!</span>
+                <em class="error help-block text-danger" *ngIf="form.controls['username'].errors?.required && form.get('username').touched">Mobile number required!</em>
+              </div>
+              <div class="section-field mb-20">
+                <label class="mb-10" for="Password">Password </label><span class="text-danger font-italic"> *</span>
+                <input id="Password" class="Password form-control" type="password" placeholder="Password" name="Password" formControlName="password"  required minlength="5">
+                <span class="text-danger font-italic pt-2" *ngIf="form.controls['password'].hasError('minlength')">Password should be 5 characters!</span>
+                <em class="error help-block text-danger" *ngIf="form.controls['password'].errors?.required && form.get('password').touched">Password required!</em>
+              </div>
+              <div class="section-field">
+                <div class="remember-checkbox mb-30">
+                  <input type="checkbox" class="form-control" name="two" id="two" />
+                  <label for="two"> Remember me</label>
+                  <a routerLink="password-recovery" class="float-right">Forgot Password?</a>
+                </div>
+              </div>
+              <a href="javascript:void(0);" (click)="login();"  class="button">
+                <span>Log in</span>
+                <i class="fa fa-check"></i>
+              </a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div id="back-to-top"><a class="top arrow" href="#top"><i class="fa fa-angle-up"></i> <span>TOP</span></a></div>

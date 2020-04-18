@@ -1,0 +1,363 @@
+<div class="row" *ngIf="role_id == 1">
+
+  <div class="col-xl-6 mb-30">
+
+    <div class="card card-statistics h-100">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-9"> <h5 class="card-title">Participant</h5></div>
+          <div class="col-md-3" *ngIf="tempParty.length > 0">
+            <button type="button" class="btn btn-success float-right ml-3" data-toggle="modal"
+                    data-target="#addCategoryModal" (click)="openModal('participantFormModal', 'add')">
+              <i class="ti-plus"></i> Participant
+            </button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <div class="row py-3">
+            <div class="col-md-9"></div>
+            <div class="col-md-3 float-right">
+              <div class="widget-search ml-0 clearfix">
+                <i class="fa fa-search"></i>
+                <input type="search" class="form-control" placeholder="Search..." (keyup)='updateFilter($event)'>
+              </div>
+            </div>
+          </div>
+          <ngx-datatable
+                  #table
+                  class='bootstrap'
+                  [columnMode]="'force'"
+                  [headerHeight]="'auto'"
+                  [footerHeight]="'auto'"
+                  [rowHeight]="'auto'"
+                  [limit]="10"
+                  [rows]='tempParticipant'>
+
+            <ngx-datatable-column name="Short Name" prop="short_name" >
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value" >
+                <span class="text-capitalize"> {{row.short_name}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Image" prop="logo" >
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value" >
+                <span><img src="{{imagepath + row.logo}}"  style="width: 32px"></span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Participant Name" prop="participant_name" >
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value" >
+                <span class="text-capitalize"> {{row.participant_name}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Age" prop="age" >
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value">
+                {{row.age}}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Gender" prop="gender" >
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value">
+                {{row.gender}}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Action">
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value">
+                <span class="btn btn-default mr-3 text-info" (click)="editParticipant(row,'participantFormModal')">
+                  <i class="ti-pencil-alt" style="font-weight: bolder" title="Edit"></i>
+                </span>
+                <span class="btn btn-default mr-3 text-danger font-weight-bold" (click)="editParticipant(row,'participantDeleteFormModal')">
+                  <i  style="font-weight: bolder" class="ti-trash" title="Delete"></i>
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-6 mb-30">
+    <div class="card card-statistics h-100">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-9"> <h5 class="card-title">Vote count</h5></div>
+          <div class="col-md-3">
+          </div>
+        </div>
+        <div class="table-responsive">
+          <div class="row py-3">
+            <div class="col-md-9"></div>
+            <div class="col-md-3 float-right">
+              <!--<div class="widget-search ml-0 clearfix">-->
+                <!--<i class="fa fa-search"></i>-->
+                <!--<input type="search" class="form-control" placeholder="Search..." (keyup)='updateFilter($event)'>-->
+              <!--</div>-->
+            </div>
+          </div>
+          <ngx-datatable
+                  #table
+                  class='bootstrap'
+                  [columnMode]="'force'"
+                  [headerHeight]="'auto'"
+                  [footerHeight]="'auto'"
+                  [rowHeight]="'auto'"
+                  [limit]="10"
+                  [rows]='voteList'>
+
+            <ngx-datatable-column name="Short Name" prop="short_name" >
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value" >
+                <span class="text-capitalize"> {{row.short_name}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Image" prop="logo" >
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value" >
+                <span><img src="{{imagepath + row.logo}}"  style="width: 32px"></span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Participant Name" prop="participant_name" >
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value" >
+                <span class="text-capitalize"> {{row.participant_name}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Vote count" prop="vote_count" >
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value">
+                {{row.vote_count}}
+              </ng-template>
+            </ngx-datatable-column>
+
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="row" *ngIf="role_id == 2 && is_voted == 0">
+
+  <div class="col-xl-12 mb-30">
+
+    <div class="card card-statistics h-100">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-9"> <span *ngIf="tempParty.length > 0"><h5 class="card-title">Participant</h5></span></div>
+          <div class="col-md-3">
+            <button type="button" class="btn btn-success float-right ml-3" data-toggle="modal"
+                    data-target="#addCategoryModal" (click)="openModal('participantFormModal', 'add')">
+              <i class="ti-plus"></i> Participant
+            </button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <div class="row py-3">
+            <div class="col-md-9"></div>
+            <div class="col-md-3 float-right">
+              <div class="widget-search ml-0 clearfix">
+                <i class="fa fa-search"></i>
+                <input type="search" class="form-control" placeholder="Search..." (keyup)='updateFilter($event)'>
+              </div>
+            </div>
+          </div>
+          <ngx-datatable
+                  #table
+                  class='bootstrap'
+                  [columnMode]="'force'"
+                  [headerHeight]="'auto'"
+                  [footerHeight]="'auto'"
+                  [rowHeight]="'auto'"
+                  [limit]="10"
+                  [rows]='tempParticipant'>
+
+            <ngx-datatable-column name="Short Name" prop="short_name" >
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value" >
+                <span class="text-capitalize"> {{row.short_name}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Image" prop="logo" >
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value" >
+                <span><img src="{{imagepath + row.logo}}"  style="width: 32px"></span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Participant Name" prop="participant_name" >
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value" >
+                <span class="text-capitalize"> {{row.participant_name}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Vote now">
+              <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex"  let-value="value">
+                <span class="btn btn-default mr-3 text-info" (click)="vote(row.participant_id)">
+                  <i class="ti-thumb-up" style="font-weight: bolder" title="vote"></i>
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="role_id == 2 && is_voted == 1">
+  <div class="card container">
+    <div class="card-body">
+      You already polled successfully!!!!
+    </div>
+  </div>
+</div>
+
+<app-model class="modal fade bd-example-modal-lg" id="participantDeleteFormModal" tabindex="-1" role="dialog" aria-labelledby="participantDeleteFormModal" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="participantDeleteFormLabbel">
+          <div class="section-title mb-10">
+            <h5> Delete Participant </h5>
+          </div>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal('participantDeleteFormModal')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row pl-3">
+          <span>Are you sure you want to delete?</span>
+        </div>
+        <div class="row float-right pt-3">
+          <button *ngIf="edit" class="btn btn-info mr-3"  (click)="delete();closeModal('participantDeleteFormModal');">Ok</button>
+          <button  class="btn btn-secondary mr-3" (click)="closeModal('participantDeleteFormModal')">cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-model>
+
+<app-model  class="modal fade bd-example-modal-md align-items-center" id="participantFormModal" tabindex="-1" role="dialog" aria-labelledby="participantFormModal" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="participantFormLabbel">
+          <div class="section-title mb-10">
+            <h5 *ngIf="!edit">Add Participant </h5>
+            <h5 *ngIf="edit">Edit Paticipant </h5>
+          </div>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal('participantFormModal')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" class="p-5">
+          <div class="row">
+
+            <div class="col-md-6 pb-5">
+              <div class="form-group">
+                <label>Party Name <span class="text-danger">*</span></label>
+                <select class="select form-control" formControlName="party" tabindex="-1" aria-hidden="true">
+                  <option *ngFor="let par of partyList" [value]="par.id">{{par.short_name}}</option>
+                </select>
+                <em class="error help-block text-danger" *ngIf="!form.get('party').valid && (form.get('party').dirty || form.get('party').touched)">Please select party</em>
+              </div>
+            </div>
+
+            <div class="col-md-6 pb-5">
+              <div class="form-group">
+                <label>Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="name" (keypress)="characterPattern($event)">
+                <em class="error help-block text-danger" *ngIf="!form.get('name').valid && (form.get('name').dirty || form.get('name').touched)">Please enter name</em>
+              </div>
+            </div>
+
+            <div class="col-md-6 pb-5">
+              <div class="form-group">
+                <label>Age<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="age" (keypress)="validateNumber($event)">
+                <em class="error help-block text-danger" *ngIf="!form.get('age').valid && (form.get('age').dirty || form.get('age').touched)">Please enter age</em>
+              </div>
+            </div>
+
+            <div class="col-md-6 pb-5">
+              <div class="form-group">
+                <label>Gender <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="gender" (keypress)="characterPattern($event)">
+                <em class="error help-block text-danger" *ngIf="!form.get('gender').valid && (form.get('gender').dirty || form.get('gender').touched)">Please enter gender</em>
+              </div>
+            </div>
+
+            <div class="col-md-6 pb-5">
+              <div class="form-group">
+                <label>Mobile Number <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="mobile" required minlength="10" maxlength="10" (keypress)="validateNumber($event)">
+                <span class="text-danger font-italic pt-2" *ngIf="form.controls['mobile'].hasError('minlength')">Mobilenumber should be 10 characters</span>
+                <em class="error help-block text-danger" *ngIf="form.controls['mobile'].errors?.required && form.get('mobile').touched">Please enter mobile number</em>
+              </div>
+            </div>
+
+            <div class="col-md-6 pb-5">
+              <div class="form-group">
+                <label>Qualification</label>
+                <input type="text" class="form-control" formControlName="qualification">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+            </div>
+            <div class="col-md-4">
+              <button *ngIf="edit" class="btn btn-info ml-3" style="float: left" [disabled]='form.invalid' (click)="update('participantFormModal');">Submit</button>
+              <button *ngIf="!edit" class="btn btn-info ml-3" style="float: left" [disabled]='form.invalid' (click)="add();">Submit</button>
+              <button  class="btn btn-secondary" style="float: right" (click)="closeModal('participantFormModal')">cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</app-model>
+
+<app-model class="modal fade bd-example-modal-lg" id="voteFormModal" tabindex="-1" role="dialog" aria-labelledby="voteFormModalModal" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="voteFormModalLabbel">
+          <div class="section-title mb-10">
+            <h5> Voted successfully </h5>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row float-right pt-3">
+          <button class="btn btn-info mr-3" (click)="logout();closeModal('voteFormModal');">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-model>
+
+
+<style>
+
+  .modal-content {
+    width: 140%;
+  }
+
+  .form-control {
+    font-size: 15px;
+    padding: 10px 10px 10px 10px;
+  }
+
+  .pb-5, .py-5 {
+    padding-bottom: 1rem!important;
+  }
+
+</style>
