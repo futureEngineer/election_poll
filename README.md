@@ -14,7 +14,7 @@ Role based authetication and password encryption
 
 2. npm start to run the code
 
-3. For backend you need to run the vote.db file in backend directory for databse craetion.
+3. For backend you need to run the vote.db file in backend directory for database creation.
 
 ***2.Admin credentials***
 
@@ -26,4 +26,4 @@ Password: 123456
 Mobilenumber : 3333333333\
 Password: 123456
 
-For more user credentials check with db in users table.
+For more user credentials, check with db ( users table).
